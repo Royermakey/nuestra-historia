@@ -541,6 +541,12 @@ box-shadow:
     <span>♡</span>
     <span>❤️</span>
 </div>  
+
+
+<!-- MÚSICA DE NUESTRA HISTORIA -->
+<audio id="musicaHistoria" loop preload="auto">
+    <source src="por%20verte%20feliz.mpeg" type="audio/mpeg">
+</audio>
     
     <!-- PRIMERA PANTALLA -->
     <div class="pantalla" id="primeraPantalla">
@@ -645,13 +651,22 @@ box-shadow:
         // CAMBIAR DE PANTALLA
         // ==========================================
 
-        function continuar() {
+       
+function continuar() {
 
-            document.getElementById("primeraPantalla").style.display = "none";
+    const musica = document.getElementById("musicaHistoria");
 
-            document.getElementById("segundaPantalla").style.display = "block";
+    musica.volume = 0.6;
 
-        }
+    musica.play().catch(error => {
+        console.log("No se pudo reproducir la música:", error);
+    });
+
+    document.getElementById("primeraPantalla").style.display = "none";
+
+    document.getElementById("segundaPantalla").style.display = "block";
+
+}
 
 
         function mostrarTercera() {
