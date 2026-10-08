@@ -49,7 +49,9 @@
             transform: scale(1.05);
         }
 
-        #segundaPantalla {
+        #segundaPantalla,
+        #terceraPantalla,
+        #contadorPantalla {
             display: none;
         }
     </style>
@@ -92,7 +94,7 @@
 
 
     <!-- TERCERA PANTALLA -->
-    <div class="pantalla" id="terceraPantalla" style="display:none;">
+    <div class="pantalla" id="terceraPantalla">
 
         <h1>¿Quieres continuar esta historia conmigo? ❤️</h1>
 
@@ -103,8 +105,8 @@
     </div>
 
 
-    <!-- PANTALLA DEL CONTADOR -->
-    <div class="pantalla" id="contadorPantalla" style="display:none;">
+    <!-- CONTADOR -->
+    <div class="pantalla" id="contadorPantalla">
 
         <h1>❤️ Nuestra historia comienza aquí ❤️</h1>
 
@@ -116,6 +118,21 @@
 
 
     <script>
+
+        // ==========================================
+        // CONEXIÓN CON SUPABASE
+        // ==========================================
+
+        const SUPABASE_URL =
+            "https://vwksswnwxmmrfpnuline.supabase.co";
+
+        const SUPABASE_KEY =
+            "sb_publishable_4ABY1on84G4J0taRCeUbpg_S9EIer9p";
+
+
+        // ==========================================
+        // CAMBIAR DE PANTALLA
+        // ==========================================
 
         function continuar() {
 
@@ -135,41 +152,193 @@
         }
 
 
-   function aceptar() {
+        // ==========================================
+        // CUANDO PULSA "SÍ, QUIERO"
+        // ==========================================
 
-    document.getElementById("terceraPantalla").style.display = "none";
+        async function aceptar() {
 
-    document.getElementById("contadorPantalla").style.display = "block";
+            try {
 
-    iniciarContador();
+                // Comprobar si ya existe un inicio
+                const respuesta = await fetch(
+                    SUPABASE_URL +
+                    "/rest/v1/contador?select=id,inicio&order=inicio.asc&limit=1",
+                    {
+                        method: "GET",
+                        headers: {
+                            "apikey": SUPABASE_KEY,
+                            "Authorization": "Bearer " + SUPABASE_KEY
+                        }
+                    }
+                );
 
-}
+                const datos = await respuesta.json();
 
 
-let inicio;
-let intervalo;
+                // Si ya existe, usamos el inicio existente
+                if (datos.length > 0) {
+
+                    mostrarContador(datos[0].inicio);
+
+                    return;
+                }
 
 
-function iniciarContador() {
+                // Si no existe, ESTE es el momento en que comienza
+                const momentoInicio = new Date().toISOString();
 
-    inicio = new Date();
 
-    intervalo = setInterval(function() {
+                const guardar = await fetch(
+                    SUPABASE_URL + "/rest/v1/contador",
+                    {
+                        method: "POST",
 
-        let ahora = new Date();
+                        headers: {
+                            "apikey": SUPABASE_KEY,
+                            "Authorization": "Bearer " + SUPABASE_KEY,
+                            "Content-Type": "application/json",
+                            "Prefer": "return=minimal"
+                        },
 
-        let diferencia = ahora - inicio;
+                        body: JSON.stringify({
+                            inicio: momentoInicio
+                        })
+                    }
+                );
 
-        let segundos = Math.floor(diferencia / 1000);
 
-        document.getElementById("contador").innerText =
-            segundos + " segundos";
+                if (!guardar.ok) {
 
-    }, 1000);
+                    throw new Error("No se pudo guardar el inicio.");
 
-}
+                }
 
-   </script>
+
+                mostrarContador(momentoInicio);
+
+            } catch (error) {
+
+                console.error(error);
+
+                alert(
+                    "No se pudo conectar con el contador. Revisa la configuración de Supabase."
+                );
+
+            }
+
+        }
+
+
+        // ==========================================
+        // MOSTRAR EL CONTADOR
+        // ==========================================
+
+        function mostrarContador(inicio) {
+
+            document.getElementById("primeraPantalla").style.display = "none";
+
+            document.getElementById("segundaPantalla").style.display = "none";
+
+            document.getElementById("terceraPantalla").style.display = "none";
+
+            document.getElementById("contadorPantalla").style.display = "block";
+
+
+            actualizarContador(inicio);
+
+
+            setInterval(function() {
+
+                actualizarContador(inicio);
+
+            }, 1000);
+
+        }
+
+
+        function actualizarContador(inicio) {
+
+            const fechaInicio = new Date(inicio);
+
+            const ahora = new Date();
+
+            const diferencia = ahora - fechaInicio;
+
+
+            const segundosTotales =
+                Math.floor(diferencia / 1000);
+
+
+            const dias =
+                Math.floor(segundosTotales / 86400);
+
+
+            const horas =
+                Math.floor((segundosTotales % 86400) / 3600);
+
+
+            const minutos =
+                Math.floor((segundosTotales % 3600) / 60);
+
+
+            const segundos =
+                segundosTotales % 60;
+
+
+            document.getElementById("contador").innerText =
+                dias + " días, " +
+                horas + " horas, " +
+                minutos + " minutos y " +
+                segundos + " segundos";
+
+        }
+
+
+        // ==========================================
+        // COMPROBAR AL ABRIR LA PÁGINA
+        // ==========================================
+
+        async function comprobarContador() {
+
+            try {
+
+                const respuesta = await fetch(
+                    SUPABASE_URL +
+                    "/rest/v1/contador?select=id,inicio&order=inicio.asc&limit=1",
+                    {
+                        method: "GET",
+                        headers: {
+                            "apikey": SUPABASE_KEY,
+                            "Authorization": "Bearer " + SUPABASE_KEY
+                        }
+                    }
+                );
+
+
+                const datos = await respuesta.json();
+
+
+                // Si ya comenzó anteriormente,
+                // mostrar directamente el contador.
+                if (datos.length > 0) {
+
+                    mostrarContador(datos[0].inicio);
+
+                }
+
+            } catch (error) {
+
+                console.error(error);
+
+            }
+
+        }
+
+
+        comprobarContador();
+
+    </script>
 
 </body>
 </html>
