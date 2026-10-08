@@ -847,14 +847,12 @@ function continuar() {
                 const datos = await respuesta.json();
 
 
-                // Si ya comenzó anteriormente,
-                // mostrar directamente el contador.
-                if (datos.length > 0) {
-
-                    mostrarContador(datos[0].inicio);
-
-                }
-
+              // No mostrar el contador automáticamente al abrir.
+             // El contador aparecerá al pulsar "Sí, quiero ❤️".
+    if (datos.length > 0) {
+    console.log("El contador ya tiene una fecha guardada.");
+}
+                
             } catch (error) {
 
                 console.error(error);
