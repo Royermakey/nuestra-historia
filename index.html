@@ -115,8 +115,24 @@
         <h2 id="contador">0 segundos</h2>
 
     </div>
+    
 
+    <!-- FOTOS -->
+    <div class="pantalla" id="fotosPantalla">
 
+        <h2>❤️ Algunos recuerdos ❤️</h2>
+
+        <img src="tu_foto_pareja.jpg"
+             alt="Nuestro recuerdo"
+             style="width:100%; max-width:400px; border-radius:20px; margin:15px 0;">
+
+        <img src="tu_foto_recuerdo.jpg"
+             alt="Un recuerdo especial"
+             style="width:100%; max-width:400px; border-radius:20px;">
+
+    </div>
+
+    
     <script>
 
         // ==========================================
@@ -243,6 +259,8 @@
             document.getElementById("terceraPantalla").style.display = "none";
 
             document.getElementById("contadorPantalla").style.display = "block";
+            
+            document.getElementById("fotosPantalla").style.display = "block";
 
 
             actualizarContador(inicio);
