@@ -196,6 +196,7 @@
             margin: 0;
             min-height: 100vh;
             display: flex;
+            flex-direction: column;
             justify-content: center;
             align-items: center;
             text-align: center;
@@ -211,8 +212,40 @@
 .pantalla {
     width: 90%;
     max-width: 500px;
+
     position: relative;
     z-index: 2;
+
+    padding: 35px 25px;
+    box-sizing: border-box;
+
+    background: rgba(255, 255, 255, 0.07);
+
+    border: 1px solid rgba(255, 255, 255, 0.18);
+
+    border-radius: 30px;
+
+    backdrop-filter: blur(10px);
+
+    box-shadow:
+        0 15px 40px rgba(0, 0, 0, 0.30),
+        0 0 30px rgba(255, 100, 190, 0.12);
+
+    animation: aparecerPantalla 0.8s ease forwards;
+}
+
+        @keyframes aparecerPantalla {
+
+    from {
+        opacity: 0;
+        transform: translateY(20px) scale(0.97);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+
 }
 
         h1 {
@@ -224,21 +257,44 @@
             line-height: 1.6;
         }
 
-        button {
-            margin-top: 25px;
-            padding: 15px 30px;
-            border: none;
-            border-radius: 30px;
-            background: white;
-            color: #e75480;
-            font-size: 18px;
-            font-weight: bold;
-            cursor: pointer;
-        }
+     button {
+    margin-top: 25px;
+    padding: 15px 32px;
 
-        button:hover {
-            transform: scale(1.05);
-        }
+    border: 1px solid rgba(255, 255, 255, 0.45);
+    border-radius: 30px;
+
+    background: rgba(255, 255, 255, 0.12);
+    color: white;
+
+    font-size: 18px;
+    font-weight: bold;
+
+    cursor: pointer;
+
+    backdrop-filter: blur(10px);
+
+    box-shadow:
+        0 8px 25px rgba(0, 0, 0, 0.25),
+        0 0 18px rgba(255, 120, 200, 0.25);
+
+    transition:
+        transform 0.3s ease,
+        box-shadow 0.3s ease,
+        background 0.3s ease;
+}
+
+button:hover {
+    transform: scale(1.07);
+
+    background: rgba(255, 255, 255, 0.20);
+
+    box-shadow:
+        0 10px 30px rgba(0, 0, 0, 0.30),
+        0 0 25px rgba(255, 140, 210, 0.50);
+}
+        
+        
 /* TÍTULO HERMOSA */
 
 .tituloHermosa {
@@ -246,9 +302,32 @@
     font-size: 48px;
     font-weight: normal;
     margin: 10px 0;
-    text-shadow: 0 3px 10px rgba(0,0,0,0.20);
+
+    text-shadow:
+        0 0 8px rgba(255, 180, 220, 0.4),
+        0 0 18px rgba(255, 100, 180, 0.25);
+
+    animation: aparecerHermosa 1.5s ease forwards;
 }
 
+@keyframes aparecerHermosa {
+
+    from {
+        opacity: 0;
+        transform: translateY(-20px) scale(0.9);
+        text-shadow:
+            0 0 0 rgba(255, 180, 220, 0);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+        text-shadow:
+            0 0 8px rgba(255, 180, 220, 0.4),
+            0 0 18px rgba(255, 100, 180, 0.25);
+    }
+
+}
 
 /* FRASE */
 
@@ -270,26 +349,66 @@
     margin: 20px auto;
     padding: 8px;
     box-sizing: border-box;
+   
+background: rgba(255, 255, 255, 0.12);
 
-    background: rgba(255, 255, 255, 0.25);
-    border-radius: 25px;
+border: 1px solid rgba(255, 190, 235, 0.55);
 
-    box-shadow:
-        0 10px 30px rgba(0,0,0,0.20),
-        0 0 20px rgba(255,255,255,0.35);
+border-radius: 25px;
+
+    
+box-shadow:
+    0 10px 30px rgba(0, 0, 0, 0.25),
+    0 0 15px rgba(255, 120, 200, 0.30),
+    0 0 30px rgba(150, 100, 255, 0.18);
 
     backdrop-filter: blur(5px);
 
     animation: aparecerFoto 1.2s ease forwards;
+
+    transition:
+        transform 0.4s ease,
+        box-shadow 0.4s ease;
 }
+        
+       .fotoCard:hover {
+    transform: translateY(-5px);
+
+    box-shadow:
+        0 18px 40px rgba(0,0,0,0.35),
+        0 0 30px rgba(255,180,230,0.45);
+} 
 
 
 /* IMÁGENES */
 
+
+
 .fotoCard img {
     display: block;
     width: 100%;
-    border-radius: 20px;
+    aspect-ratio: 16 / 9;
+    height: auto;
+    object-fit: cover;
+    border-radius: 18px;
+
+    filter: brightness(0.88) contrast(1.08) saturate(0.92);
+
+    transition:
+        transform 0.7s ease,
+        filter 0.7s ease;
+}
+
+
+.fotoCard:hover img {
+    transform: scale(1.045);
+    filter: brightness(1.05) contrast(1.12) saturate(1.05);
+}
+
+@media (hover: none) {
+    .fotoCard:hover img {
+        transform: none;
+    }
 }
 
 
@@ -308,13 +427,93 @@
     }
 
 }
+        .fotoCard:nth-of-type(1) {
+    animation-delay: 0.2s;
+}
+
+.fotoCard:nth-of-type(2) {
+    animation-delay: 0.6s;
+}
+
+.fotoCard:nth-of-type(3) {
+    animation-delay: 1s;
+}
         
-      #segundaPantalla,
+ #segundaPantalla,
 #terceraPantalla,
 #contadorPantalla,
 #fotosPantalla {
     display: none;
 }
+
+        /* TARJETA DEL CONTADOR */
+        
+#fotosPantalla {
+    margin-top: 25px;
+}
+        
+#contadorPantalla {
+    background: rgba(255, 255, 255, 0.08);
+    border: 1px solid rgba(255, 255, 255, 0.20);
+    border-radius: 30px;
+    padding: 30px 20px;
+    box-sizing: border-box;
+
+    backdrop-filter: blur(12px);
+
+    box-shadow:
+        0 15px 40px rgba(0, 0, 0, 0.35),
+        0 0 30px rgba(255, 120, 200, 0.18);
+
+    animation: aparecerContador 1s ease forwards;
+}
+
+/* TÍTULO DEL CONTADOR */
+
+#contadorPantalla h1 {
+    font-family: Georgia, "Times New Roman", serif;
+    font-size: 32px;
+    line-height: 1.3;
+    margin-top: 0;
+    text-shadow:
+        0 0 10px rgba(255, 180, 220, 0.5);
+}
+
+/* TEXTO "HA PASADO" */
+
+#contadorPantalla p {
+    font-size: 18px;
+    opacity: 0.85;
+    margin-bottom: 8px;
+}
+
+/* NÚMERO DEL CONTADOR */
+
+#contador {
+    font-family: Georgia, "Times New Roman", serif;
+    font-size: 25px;
+    line-height: 1.6;
+    margin: 5px 0 0;
+
+    text-shadow:
+        0 0 8px rgba(255, 180, 220, 0.7),
+        0 0 18px rgba(255, 100, 180, 0.4);
+}
+
+/* APARICIÓN */
+
+@keyframes aparecerContador {
+    from {
+        opacity: 0;
+        transform: translateY(25px) scale(0.96);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+}
+        
     </style>
 </head>
 
