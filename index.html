@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Nuestra Historia ❤️</title>
+
+    <style>
+        body {
+            margin: 0;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            font-family: Arial, sans-serif;
+            background: linear-gradient(135deg, #ffdde1, #ee9ca7);
+            color: white;
+        }
+
+        .pantalla {
+            width: 90%;
+            max-width: 500px;
+        }
+
+        h1 {
+            font-size: 40px;
+        }
+
+        p {
+            font-size: 20px;
+            line-height: 1.6;
+        }
+
+        button {
+            margin-top: 25px;
+            padding: 15px 30px;
+            border: none;
+            border-radius: 30px;
+            background: white;
+            color: #e75480;
+            font-size: 18px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        button:hover {
+            transform: scale(1.05);
+        }
+
+        #segundaPantalla {
+            display: none;
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- PRIMERA PANTALLA -->
+    <div class="pantalla" id="primeraPantalla">
+
+        <h1>Nuestra Historia ❤️</h1>
+
+        <p>
+            Todo comenzó con un momento
+            que nunca olvidaré.
+        </p>
+
+        <button onclick="continuar()">
+            Continuar ❤️
+        </button>
+
+    </div>
+
+
+    <!-- SEGUNDA PANTALLA -->
+    <div class="pantalla" id="segundaPantalla">
+
+        <h1>Hay algo que quiero decirte ❤️</h1>
+
+        <p>
+            Desde que llegaste a mi vida,
+            muchas cosas cambiaron.
+        </p>
+
+        <button onclick="mostrarTercera()">
+            Seguir 💕
+        </button>
+
+    </div>
+
+
+    <!-- TERCERA PANTALLA -->
+    <div class="pantalla" id="terceraPantalla" style="display:none;">
+
+        <h1>¿Quieres continuar esta historia conmigo? ❤️</h1>
+
+        <button onclick="aceptar()">
+            Sí, quiero ❤️
+        </button>
+
+    </div>
+
+
+    <!-- PANTALLA DEL CONTADOR -->
+    <div class="pantalla" id="contadorPantalla" style="display:none;">
+
+        <h1>❤️ Nuestra historia comienza aquí ❤️</h1>
+
+        <p>Ha pasado:</p>
+
+        <h2 id="contador">0 segundos</h2>
+
+    </div>
+
+
+    <script>
+
+        function continuar() {
+
+            document.getElementById("primeraPantalla").style.display = "none";
+
+            document.getElementById("segundaPantalla").style.display = "block";
+
+        }
+
+
+        function mostrarTercera() {
+
+            document.getElementById("segundaPantalla").style.display = "none";
+
+            document.getElementById("terceraPantalla").style.display = "block";
+
+        }
+
+
+   function aceptar() {
+
+    document.getElementById("terceraPantalla").style.display = "none";
+
+    document.getElementById("contadorPantalla").style.display = "block";
+
+    iniciarContador();
+
+}
+
+
+let inicio;
+let intervalo;
+
+
+function iniciarContador() {
+
+    inicio = new Date();
+
+    intervalo = setInterval(function() {
+
+        let ahora = new Date();
+
+        let diferencia = ahora - inicio;
+
+        let segundos = Math.floor(diferencia / 1000);
+
+        document.getElementById("contador").innerText =
+            segundos + " segundos";
+
+    }, 1000);
+
+}
+
+   </script>
+
+</body>
+</html>
