@@ -543,6 +543,7 @@ box-shadow:
 </div>  
 
 
+
 <!-- MÚSICA DE NUESTRA HISTORIA -->
 <audio id="musicaHistoria" loop preload="auto">
     <source src="por%20verte%20feliz.mpeg" type="audio/mpeg">
@@ -652,20 +653,19 @@ box-shadow:
         // ==========================================
 
        
-function continuar() {
 
+function continuar() {
     const musica = document.getElementById("musicaHistoria");
 
     musica.volume = 0.6;
+    musica.preload = "auto";
 
     musica.play().catch(error => {
         console.log("No se pudo reproducir la música:", error);
     });
 
     document.getElementById("primeraPantalla").style.display = "none";
-
     document.getElementById("segundaPantalla").style.display = "block";
-
 }
 
 
