@@ -293,7 +293,29 @@ button:hover {
         0 10px 30px rgba(0, 0, 0, 0.30),
         0 0 25px rgba(255, 140, 210, 0.50);
 }
+
         
+/* BOTÓN PARA PENSARLO CON CALMA */
+
+.botonPensarlo {
+    display: block;
+    margin: 15px auto 0;
+    background: rgba(255, 255, 255, 0.06);
+    border: 1px solid rgba(255, 190, 235, 0.55);
+}
+
+/* MENSAJE QUE APARECE AL PULSAR */
+
+#mensajePensarlo {
+    margin-top: 22px;
+    padding: 15px;
+    border-radius: 18px;
+    background: rgba(255, 255, 255, 0.08);
+    border: 1px solid rgba(255, 190, 235, 0.25);
+    font-size: 17px;
+    line-height: 1.6;
+}
+
         
 /* TÍTULO HERMOSA */
 
@@ -751,6 +773,17 @@ box-shadow:
         <button onclick="aceptar()">
     Dejemos que el tiempo hable ❤️
 </button>
+
+        <button onclick="pensarlo()" class="botonPensarlo">
+            No sé todavía 🙈
+        </button>
+
+        <p id="mensajePensarlo" style="display: none;">
+            Está bien, no tienes que decidirlo ahora. ❤️
+            Piénsalo con calma; quiero que sea algo que nazca
+            de ti, sin presiones. 🌷
+        </p>
+        
     </div>
     
 
@@ -857,6 +890,13 @@ function continuar() {
         // CUANDO PULSA "SÍ, QUIERO"
         // ==========================================
 
+        
+function pensarlo() {
+    const mensaje = document.getElementById("mensajePensarlo");
+
+    mensaje.style.display = "block";
+}
+        
         async function aceptar() {
 
             try {
